@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3w3kyos2h4mi"]
+[gd_scene load_steps=12 format=3 uid="uid://d3w3kyos2h4mi"]
 
 [ext_resource type="Texture2D" uid="uid://cum5khv3jtce1" path="res://assets/ground.png" id="1_ab0rb"]
 [ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://assets/bg.png" id="1_biqsy"]
@@ -8,14 +8,9 @@
 [ext_resource type="Script" path="res://CharacterBody2D.gd" id="3_y43py"]
 [ext_resource type="Texture2D" uid="uid://cb3fw6j2c364v" path="res://assets/bird3.png" id="4_y43m8"]
 [ext_resource type="Script" path="res://Ground.gd" id="5_pmjo5"]
-[ext_resource type="Script" path="res://Pipes.gd" id="8_hb84g"]
-[ext_resource type="Texture2D" uid="uid://den4sx3n8oo4t" path="res://assets/pipe.png" id="9_wd01h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk7rf"]
 size = Vector2(1154, 91)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqm2j"]
-size = Vector2(72, 558.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6lko"]
 animations = [{
@@ -59,36 +54,9 @@ texture = ExtResource("1_ab0rb")
 position = Vector2(43, -35.5)
 shape = SubResource("RectangleShape2D_fk7rf")
 
-[node name="Pipes" type="Node2D" parent="."]
-light_mask = 524288
-visibility_layer = 524288
-script = ExtResource("8_hb84g")
-
-[node name="UpperPipe" type="Area2D" parent="Pipes"]
-position = Vector2(1059, -94)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pipes/UpperPipe"]
-position = Vector2(0, -3)
-shape = SubResource("RectangleShape2D_eqm2j")
-
-[node name="Sprite2D" type="Sprite2D" parent="Pipes/UpperPipe"]
-light_mask = 524288
-visibility_layer = 524288
-texture = ExtResource("9_wd01h")
-flip_v = true
-
-[node name="LowerPipe" type="Area2D" parent="Pipes"]
-position = Vector2(1059.09, 607)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pipes/LowerPipe"]
-position = Vector2(0, 2.25)
-shape = SubResource("RectangleShape2D_eqm2j")
-
-[node name="Sprite2D" type="Sprite2D" parent="Pipes/LowerPipe"]
-texture = ExtResource("9_wd01h")
-
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 top_level = true
+z_index = 1000
 position = Vector2(128, 77)
 motion_mode = 1
 script = ExtResource("3_y43py")
@@ -102,5 +70,3 @@ position = Vector2(-0.5, 0)
 shape = SubResource("CapsuleShape2D_w1810")
 
 [connection signal="body_entered" from="Ground" to="CharacterBody2D" method="_on_ground_body_entered"]
-[connection signal="body_entered" from="Pipes/UpperPipe" to="CharacterBody2D" method="_on_upper_pipe_body_entered"]
-[connection signal="body_entered" from="Pipes/LowerPipe" to="CharacterBody2D" method="_on_lower_pipe_body_entered"]

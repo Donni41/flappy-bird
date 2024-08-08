@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://ot0m1pyaicvt"]
+
+[ext_resource type="Script" path="res://pipes.gd" id="1_ew8va"]
+[ext_resource type="Texture2D" uid="uid://den4sx3n8oo4t" path="res://assets/pipe.png" id="2_p26ns"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_puisn"]
+size = Vector2(72, 558.5)
+
+[node name="Pipes" type="Node2D"]
+script = ExtResource("1_ew8va")
+
+[node name="UpperPipe" type="Area2D" parent="."]
+position = Vector2(1059, -94)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperPipe"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_puisn")
+
+[node name="Sprite2D" type="Sprite2D" parent="UpperPipe"]
+light_mask = 524289
+visibility_layer = 524289
+texture = ExtResource("2_p26ns")
+flip_v = true
+
+[node name="LowerPipe" type="Area2D" parent="."]
+position = Vector2(1059.09, 607)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerPipe"]
+position = Vector2(0, 2.25)
+shape = SubResource("RectangleShape2D_puisn")
+
+[node name="Sprite2D" type="Sprite2D" parent="LowerPipe"]
+texture = ExtResource("2_p26ns")
+
+[connection signal="body_entered" from="UpperPipe" to="." method="_on_upper_pipe_body_entered"]
+[connection signal="body_entered" from="LowerPipe" to="." method="_on_lower_pipe_body_entered"]

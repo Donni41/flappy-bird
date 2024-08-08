@@ -24,24 +24,8 @@ func _unhandled_input(event):
 				velocity.y += 150
 
 
-func _on_ground_body_entered(body):
-	velocity.y = 0
+func game_over(velocity_y: int):
+	velocity.y = velocity_y
 	gravity = 0
-	print("game_over")
 	$AnimatedSprite2D.stop()
-	get_node("/root/Main/Pipes").set_process(false)
-	get_node("/root/Main").pipe2.set_process(false)
 
-func _on_lower_pipe_body_entered(body):
-	game_over_pipe()
-
-func _on_upper_pipe_body_entered(body):
-	game_over_pipe()
-
-func game_over_pipe():
-	velocity.y = 400
-	gravity = 0
-	print("game_over")
-	$AnimatedSprite2D.stop()
-	get_node("/root/Main/Pipes").set_process(false)
-	get_node("/root/Main").pipe2.set_process(false)
