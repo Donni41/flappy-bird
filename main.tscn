@@ -11,11 +11,11 @@
 [ext_resource type="Script" path="res://Pipes.gd" id="8_hb84g"]
 [ext_resource type="Texture2D" uid="uid://den4sx3n8oo4t" path="res://assets/pipe.png" id="9_wd01h"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqm2j"]
-size = Vector2(72, 558.5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk7rf"]
 size = Vector2(1154, 91)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqm2j"]
+size = Vector2(72, 558.5)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6lko"]
 animations = [{
@@ -48,7 +48,20 @@ script = ExtResource("1_gk4ys")
 position = Vector2(403, 335)
 texture = ExtResource("1_biqsy")
 
+[node name="Ground" type="Area2D" parent="."]
+position = Vector2(536, 651)
+script = ExtResource("5_pmjo5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+texture = ExtResource("1_ab0rb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(43, -35.5)
+shape = SubResource("RectangleShape2D_fk7rf")
+
 [node name="Pipes" type="Node2D" parent="."]
+light_mask = 524288
+visibility_layer = 524288
 script = ExtResource("8_hb84g")
 
 [node name="UpperPipe" type="Area2D" parent="Pipes"]
@@ -59,6 +72,8 @@ position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_eqm2j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pipes/UpperPipe"]
+light_mask = 524288
+visibility_layer = 524288
 texture = ExtResource("9_wd01h")
 flip_v = true
 
@@ -72,18 +87,8 @@ shape = SubResource("RectangleShape2D_eqm2j")
 [node name="Sprite2D" type="Sprite2D" parent="Pipes/LowerPipe"]
 texture = ExtResource("9_wd01h")
 
-[node name="Ground" type="Area2D" parent="."]
-position = Vector2(536, 651)
-script = ExtResource("5_pmjo5")
-
-[node name="Sprite2D" type="Sprite2D" parent="Ground"]
-texture = ExtResource("1_ab0rb")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
-position = Vector2(43, -35.5)
-shape = SubResource("RectangleShape2D_fk7rf")
-
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+top_level = true
 position = Vector2(128, 77)
 motion_mode = 1
 script = ExtResource("3_y43py")
@@ -96,6 +101,6 @@ sprite_frames = SubResource("SpriteFrames_q6lko")
 position = Vector2(-0.5, 0)
 shape = SubResource("CapsuleShape2D_w1810")
 
+[connection signal="body_entered" from="Ground" to="CharacterBody2D" method="_on_ground_body_entered"]
 [connection signal="body_entered" from="Pipes/UpperPipe" to="CharacterBody2D" method="_on_upper_pipe_body_entered"]
 [connection signal="body_entered" from="Pipes/LowerPipe" to="CharacterBody2D" method="_on_lower_pipe_body_entered"]
-[connection signal="body_entered" from="Ground" to="CharacterBody2D" method="_on_ground_body_entered"]
