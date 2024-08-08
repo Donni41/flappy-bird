@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3w3kyos2h4mi"]
+[gd_scene load_steps=17 format=3 uid="uid://d3w3kyos2h4mi"]
 
 [ext_resource type="Texture2D" uid="uid://cum5khv3jtce1" path="res://assets/ground.png" id="1_ab0rb"]
 [ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://assets/bg.png" id="1_biqsy"]
@@ -10,12 +10,17 @@
 [ext_resource type="Script" path="res://Ground.gd" id="5_pmjo5"]
 [ext_resource type="Script" path="res://Pipes.gd" id="8_hb84g"]
 [ext_resource type="Texture2D" uid="uid://den4sx3n8oo4t" path="res://assets/pipe.png" id="9_wd01h"]
+[ext_resource type="Texture2D" uid="uid://c57fej47adq38" path="res://assets/restart.png" id="11_f7qlw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk7rf"]
 size = Vector2(1154, 91)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqm2j"]
 size = Vector2(72, 558.5)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_buyoh"]
+a = Vector2(1061, 885)
+b = Vector2(1058, -368)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6lko"]
 animations = [{
@@ -87,8 +92,13 @@ shape = SubResource("RectangleShape2D_eqm2j")
 [node name="Sprite2D" type="Sprite2D" parent="Pipes/LowerPipe"]
 texture = ExtResource("9_wd01h")
 
+[node name="ScoreLine" type="Area2D" parent="Pipes"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pipes/ScoreLine"]
+shape = SubResource("SegmentShape2D_buyoh")
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-top_level = true
+z_index = 1000
 position = Vector2(128, 77)
 motion_mode = 1
 script = ExtResource("3_y43py")
@@ -101,6 +111,23 @@ sprite_frames = SubResource("SpriteFrames_q6lko")
 position = Vector2(-0.5, 0)
 shape = SubResource("CapsuleShape2D_w1810")
 
+[node name="GameOver" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="GameOver"]
+offset_left = 312.0
+offset_top = 231.0
+offset_right = 440.0
+offset_bottom = 281.0
+icon = ExtResource("11_f7qlw")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_right = 0.05
+anchor_bottom = 0.018
+offset_bottom = 11.336
+
 [connection signal="body_entered" from="Ground" to="CharacterBody2D" method="_on_ground_body_entered"]
 [connection signal="body_entered" from="Pipes/UpperPipe" to="CharacterBody2D" method="_on_upper_pipe_body_entered"]
 [connection signal="body_entered" from="Pipes/LowerPipe" to="CharacterBody2D" method="_on_lower_pipe_body_entered"]
+[connection signal="body_entered" from="Pipes/ScoreLine" to="CharacterBody2D" method="_on_score_line_body_entered"]
+[connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]
