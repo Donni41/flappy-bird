@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwrswf38j0wb8"]
+
+[ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://assets/bg.png" id="1_f8pqj"]
+[ext_resource type="Script" path="res://StartUp.gd" id="1_gy57u"]
+[ext_resource type="Texture2D" uid="uid://cum5khv3jtce1" path="res://assets/ground.png" id="2_03du4"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gy57u")
+
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(403, 335)
+texture = ExtResource("1_f8pqj")
+
+[node name="Ground" type="Sprite2D" parent="."]
+position = Vector2(536, 651)
+texture = ExtResource("2_03du4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 300.0
+offset_right = 443.0
+offset_bottom = 401.0
+
+[node name="StartGame" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start game"
+
+[node name="Records" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Records"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Records" to="." method="_on_records_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

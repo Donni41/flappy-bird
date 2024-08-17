@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d3w3kyos2h4mi"]
+[gd_scene load_steps=20 format=3 uid="uid://d3w3kyos2h4mi"]
 
 [ext_resource type="Texture2D" uid="uid://cum5khv3jtce1" path="res://assets/ground.png" id="1_ab0rb"]
 [ext_resource type="Texture2D" uid="uid://d38ceuoo614k4" path="res://assets/bg.png" id="1_biqsy"]
@@ -10,7 +10,10 @@
 [ext_resource type="Script" path="res://Ground.gd" id="5_pmjo5"]
 [ext_resource type="Script" path="res://Pipes.gd" id="8_hb84g"]
 [ext_resource type="Texture2D" uid="uid://den4sx3n8oo4t" path="res://assets/pipe.png" id="9_wd01h"]
+[ext_resource type="AudioStream" uid="uid://bw2lfi2u7mqqf" path="res://assets/Wing_flap.wav" id="11_cmnvp"]
 [ext_resource type="Texture2D" uid="uid://c57fej47adq38" path="res://assets/restart.png" id="11_f7qlw"]
+[ext_resource type="AudioStream" uid="uid://p31e86cvm87l" path="res://assets/F.wav" id="12_4w55t"]
+[ext_resource type="Texture2D" uid="uid://df3ueqef2y423" path="res://assets/back.png" id="14_vxaqx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fk7rf"]
 size = Vector2(1154, 91)
@@ -43,8 +46,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w1810"]
-radius = 20.0
-height = 40.0
+radius = 18.0
+height = 38.0
 
 [node name="Main" type="Node"]
 script = ExtResource("1_gk4ys")
@@ -111,6 +114,13 @@ sprite_frames = SubResource("SpriteFrames_q6lko")
 position = Vector2(-0.5, 0)
 shape = SubResource("CapsuleShape2D_w1810")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("11_cmnvp")
+pitch_scale = 2.49
+
+[node name="GameOver" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("12_4w55t")
+
 [node name="GameOver" type="CanvasLayer" parent="."]
 
 [node name="Button" type="Button" parent="GameOver"]
@@ -119,6 +129,13 @@ offset_top = 231.0
 offset_right = 440.0
 offset_bottom = 281.0
 icon = ExtResource("11_f7qlw")
+
+[node name="BackButton" type="Button" parent="GameOver"]
+offset_left = 311.0
+offset_top = 288.0
+offset_right = 439.0
+offset_bottom = 338.0
+icon = ExtResource("14_vxaqx")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = -1
@@ -131,3 +148,4 @@ offset_bottom = 11.336
 [connection signal="body_entered" from="Pipes/LowerPipe" to="CharacterBody2D" method="_on_lower_pipe_body_entered"]
 [connection signal="body_entered" from="Pipes/ScoreLine" to="CharacterBody2D" method="_on_score_line_body_entered"]
 [connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="GameOver/BackButton" to="." method="_on_back_button_pressed"]
